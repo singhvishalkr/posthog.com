@@ -8,7 +8,7 @@ import { CalloutBox } from "components/Docs/CalloutBox"
 
 <CalloutBox icon="IconWarning" title="Beta feature" type="action">
 
-Device bucketing is currently in beta. JavaScript web supports it automatically. Other SDKs support it when you send the device ID as `$device_id` in person properties when evaluating flags, including with local evaluation.
+Device bucketing is currently in beta. JavaScript web and React Native support it automatically. Other SDKs support it when you send the device ID as `$device_id` in person properties when evaluating flags, including with local evaluation.
 
 </CalloutBox>
 
@@ -76,6 +76,24 @@ const sameVariant = posthog.getFeatureFlag("signup-flow-experiment")
 
 If your backend also evaluates feature flags, send `deviceId` with the request so the server uses the same bucketing value as the browser.
 
+### React Native (automatic)
+
+The React Native SDK handles device bucketing automatically. On first SDK init, it generates a device ID, persists it to storage, and includes it in flag evaluation requests. The device ID persists across `identify()` and `reset()` calls.
+
+```react-native
+const variant = posthog.getFeatureFlag("signup-flow-experiment")
+
+// Read the current device ID if your backend also evaluates flags
+const deviceId = posthog.getDeviceId()
+
+posthog.identify("user@example.com")
+
+// For device-bucketed flags, this stays the same on the same device
+const sameVariant = posthog.getFeatureFlag("signup-flow-experiment")
+```
+
+If your backend also evaluates feature flags, send `deviceId` with the request so the server uses the same bucketing value as the mobile app.
+
 ### Server-side SDKs
 
 Server-side SDKs are stateless. They don't generate or persist device IDs for you. If you evaluate a device-bucketed flag on the server, pass the browser's device ID with the request and include it in the evaluation call.
@@ -123,6 +141,8 @@ with new_context():
 ```
 
 ## Shared devices and `reset()`
+
+In JavaScript web and React Native:
 
 - `posthog.reset()` keeps `$device_id`. Device-bucketed flags stay stable even after logout.
 - `posthog.reset(true)` creates a new `$device_id`. Use this on shared devices or kiosks when each session should be treated as a new device.
