@@ -244,19 +244,21 @@ To reset the user's ID and anonymous ID, call `reset`. Usually you would do this
 posthog.reset()
 ```
 
-By default, `reset()` preserves the device ID so that [device-bucketed feature flags](/docs/feature-flags/device-bucketing) stay stable across logout and login. If you want to also reset the device ID (for example, on shared devices or kiosks), pass `true`:
+By default, `reset()` preserves the device ID so [device-bucketed feature flags](/docs/feature-flags/device-bucketing) stay stable after logout. To also reset the device ID (for example, on shared devices), pass `true` as the second parameter:
 
 ```javascript
-posthog.reset(true)
+posthog.reset(undefined, true)
 ```
 
 ## Get the device ID
 
-To retrieve the current device ID, call `getDeviceId()`. This is useful if your backend also evaluates feature flags with [device bucketing](/docs/feature-flags/device-bucketing).
+The SDK generates and persists a stable device ID for [device bucketing](/docs/feature-flags/device-bucketing). To retrieve it:
 
 ```javascript
 const deviceId = posthog.getDeviceId()
 ```
+
+This is useful when your backend evaluates device-bucketed flags and needs the same device ID as the mobile app.
 
 ## Offline behavior
 

@@ -78,7 +78,7 @@ If your backend also evaluates feature flags, send `deviceId` with the request s
 
 ### React Native (automatic)
 
-The React Native SDK handles device bucketing automatically. On first SDK init, it generates a device ID, persists it to storage, and includes it in flag evaluation requests. The device ID persists across `identify()` and `reset()` calls.
+The React Native SDK handles device bucketing automatically. On first SDK init, it generates a device ID, persists it to storage, and includes it in flag evaluation requests. The device ID stays stable across `identify()` and `reset()` calls.
 
 ```react-native
 const variant = posthog.getFeatureFlag("signup-flow-experiment")
@@ -93,6 +93,16 @@ const sameVariant = posthog.getFeatureFlag("signup-flow-experiment")
 ```
 
 If your backend also evaluates feature flags, send `deviceId` with the request so the server uses the same bucketing value as the mobile app.
+
+To reset the device ID (for example, on shared devices or kiosks), pass `true` as the second parameter to `reset()`:
+
+```react-native
+// Keep the device ID (default behavior)
+posthog.reset()
+
+// Reset the device ID too
+posthog.reset(undefined, true)
+```
 
 ### Server-side SDKs
 
@@ -145,7 +155,7 @@ with new_context():
 In JavaScript web and React Native:
 
 - `posthog.reset()` keeps `$device_id`. Device-bucketed flags stay stable even after logout.
-- `posthog.reset(true)` creates a new `$device_id`. Use this on shared devices or kiosks when each session should be treated as a new device.
+- To create a new `$device_id`, use `posthog.reset(true)` in the browser SDK or `posthog.reset(undefined, true)` in the React Native SDK. Use this on shared devices or kiosks when each session should be treated as a new device.
 
 ## Further reading
 
