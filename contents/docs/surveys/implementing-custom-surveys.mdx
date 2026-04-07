@@ -276,6 +276,15 @@ This renders an unstyled survey in the `#survey-container` element that looks li
 
 You can then style the survey by targeting the classes like `survey-box`, `survey-question`, `textarea`, `buttons`, `footer-branding`, and `thank-you-message`.
 
+The `.survey-box` element also includes a `data-question-index` attribute that indicates which question is currently displayed (zero-indexed). You can use this to apply different styles to different questions or track survey progress in custom implementations:
+
+```css
+/* Style the first question differently */
+.survey-box[data-question-index="0"] {
+  background: #f5f5f5;
+}
+```
+
 ## Fetching surveys manually
 
 For more control over your surveys, you can use API surveys. When implementing an API survey, there are two options for fetching surveys from PostHog:
