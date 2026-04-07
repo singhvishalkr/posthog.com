@@ -51,6 +51,31 @@ You can give each subscription a custom name to help distinguish between them. T
 
 For Slack subscriptions, the custom name appears in the message header. For example, a subscription named "Weekly KPI Report" for a dashboard called "Main Dashboard" displays as **Weekly KPI Report** (dashboard: Main Dashboard) in the Slack message. Without a custom name, the message references the dashboard or insight name directly.
 
+## Sending subscriptions manually
+
+You can trigger a subscription on demand without waiting for the next scheduled delivery. This is useful for sharing an immediate update or testing that your subscription works correctly.
+
+To send manually, open the subscription and click **Send to subscribers now**. The subscription delivers immediately to all configured recipients.
+
+## Scheduling options
+
+When creating or editing a subscription, set the delivery frequency:
+
+- **Daily** - Deliver every day at a specific time
+- **Weekly** - Deliver on specific days of the week
+- **Monthly** - Deliver on a specific day of the month
+
+For monthly subscriptions, choose a specific date (1st through 28th) or a weekday-based schedule:
+
+- **First weekday** - The first Monday through Friday of the month
+- **2nd weekday** - The second weekday of the month
+- **3rd weekday** - The third weekday of the month
+- **Last weekday** - The last Monday through Friday of the month
+
+Weekday scheduling is useful for reports that should arrive on business days rather than weekends.
+
+After setting the schedule, the **Next delivery** date shows when the subscription will send.
+
 ## Email subscriptions
 
 When configuring an email subscription you can subscribe multiple emails at once, whether they are a member of your PostHog team or not and set the frequency of the subscription.
