@@ -319,6 +319,48 @@ Supported integration kinds include: `slack`, `salesforce`, `hubspot`, `google-a
 
 > **Note:** Sensitive configuration like credentials and tokens is deliberately excluded from this table for security reasons.
 
+### `system.logs_alerts`
+
+The `system.logs_alerts` table contains [log alert](/docs/logs) configurations from your project. Log alerts monitor your logs for specific patterns and trigger notifications when thresholds are met.
+
+| Column                   | Description                                                         |
+| ------------------------ | ------------------------------------------------------------------- |
+| `id`                     | Unique identifier for the alert                                     |
+| `team_id`                | Team ID the alert belongs to                                        |
+| `name`                   | Name of the alert                                                   |
+| `enabled`                | Whether the alert is enabled (1 = yes, 0 = no)                      |
+| `filters`                | JSON containing filter configuration for matching logs              |
+| `threshold_count`        | Number of matching logs required to trigger the alert               |
+| `threshold_operator`     | Operator for threshold comparison                                   |
+| `window_minutes`         | Time window in minutes for evaluating logs                          |
+| `check_interval_minutes` | Interval between alert checks in minutes                            |
+| `state`                  | Current state of the alert                                          |
+| `evaluation_periods`     | Number of consecutive periods to evaluate                           |
+| `datapoints_to_alarm`    | Number of periods that must breach threshold to trigger             |
+| `cooldown_minutes`       | Cooldown period in minutes between notifications                    |
+| `snooze_until`           | Time until which the alert is snoozed (nullable)                    |
+| `next_check_at`          | Next scheduled check time (nullable)                                |
+| `last_notified_at`       | When notification was last sent (nullable)                          |
+| `last_checked_at`        | When the alert was last checked (nullable)                          |
+| `consecutive_failures`   | Number of consecutive check failures                                |
+| `created_at`             | When the alert was created                                          |
+| `updated_at`             | When the alert was last updated                                     |
+
+### `system.logs_views`
+
+The `system.logs_views` table contains saved log view definitions from your project. Log views are saved filter configurations for querying [logs](/docs/logs).
+
+| Column       | Description                                    |
+| ------------ | ---------------------------------------------- |
+| `id`         | Unique identifier for the log view             |
+| `team_id`    | Team ID the log view belongs to                |
+| `short_id`   | Short identifier for the log view              |
+| `name`       | Name of the log view                           |
+| `filters`    | JSON containing filter configuration           |
+| `pinned`     | Whether the view is pinned (1 = yes, 0 = no)   |
+| `created_at` | When the log view was created                  |
+| `updated_at` | When the log view was last updated             |
+
 ### `system.notebooks`
 
 The `system.notebooks` table contains notebook metadata from your project.
