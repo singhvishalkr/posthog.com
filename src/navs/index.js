@@ -5097,6 +5097,12 @@ export const docsMenu = {
                     color: 'orange',
                 },
                 {
+                    name: 'Email channel',
+                    url: '/docs/support/email',
+                    icon: 'IconMail',
+                    color: 'orange',
+                },
+                {
                     name: 'Workflow automation',
                     url: '/docs/support/workflows',
                     icon: 'IconDecisionTree',
