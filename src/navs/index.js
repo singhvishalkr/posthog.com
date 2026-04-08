@@ -2451,6 +2451,14 @@ export const docsMenu = {
                             url: '/docs/api/dashboard-templates',
                         },
                         {
+                            name: 'Dataset items',
+                            url: '/docs/api/dataset-items',
+                        },
+                        {
+                            name: 'Datasets',
+                            url: '/docs/api/datasets',
+                        },
+                        {
                             name: 'Early access features',
                             url: '/docs/api/early-access-feature',
                         },
@@ -2461,6 +2469,14 @@ export const docsMenu = {
                         {
                             name: 'Environments',
                             url: '/docs/api/environments',
+                        },
+                        {
+                            name: 'Evaluation runs',
+                            url: '/docs/api/evaluation-runs',
+                        },
+                        {
+                            name: 'Evaluations',
+                            url: '/docs/api/evaluations',
                         },
                         {
                             name: 'Event definitions',
@@ -2497,6 +2513,14 @@ export const docsMenu = {
                         {
                             name: 'Invites',
                             url: '/docs/api/invites',
+                        },
+                        {
+                            name: 'LLM analytics',
+                            url: '/docs/api/llm-analytics',
+                        },
+                        {
+                            name: 'LLM prompts',
+                            url: '/docs/api/llm-prompts',
                         },
                         {
                             name: 'Members',
