@@ -4562,6 +4562,10 @@ export const docsMenu = {
                             url: '/docs/error-tracking/installation/go',
                         },
                         {
+                            name: 'PHP',
+                            url: '/docs/error-tracking/installation/php',
+                        },
+                        {
                             name: 'iOS',
                             url: '/docs/error-tracking/installation/ios',
                         },
