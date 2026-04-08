@@ -24,6 +24,19 @@ Instead of the firehose of all your PostHog data, you can construct a query that
 
 ![Filtering destinations](https://res.cloudinary.com/dmukukwp6/image/upload/filter_ui_8c7b1fb3be.png)
 
+## Internal events
+
+Destinations can also trigger on PostHog's internal events – not just regular analytics events like pageviews and button clicks. Internal events fire when something happens inside PostHog, such as a team member updating a feature flag or an insight alert threshold being crossed.
+
+To use internal events, click **Add event matcher** in your destination configuration and select the **Internal events** tab. The available internal events are:
+
+- **Team activity** (`$activity_log_entry_created`) - Fires when a team member creates, updates, or deletes resources like feature flags, experiments, dashboards, and more. See [activity logs](/docs/settings/activity-logs) for the full list of tracked actions.
+- **Error tracking** (`$error_tracking_issue_created`) - Fires when a new error tracking issue is created.
+- **Insight alerts** (`$insight_alert_fired`) - Fires when an [insight alert](/docs/product-analytics/alerts) threshold is crossed.
+- **Experiment metrics** (`$experiment_metric_significant`) - Fires when an experiment metric reaches statistical significance.
+
+You can filter internal events using their properties. For example, to trigger your destination only when feature flags are modified, add a filter where `scope` equals `FeatureFlag`. Team activity events include properties like `scope` (the resource type), `activity` (the action taken), and `item_id` (the specific resource ID).
+
 ## Testing
 
 The hardest part of integrating two services is making sure everything works as you expect. Every destination includes a built-in testing interface, enabling you to send real data from PostHog on-demand to your target service and debug any errors.
