@@ -11,108 +11,21 @@ import WizardCommand from 'components/WizardCommand'
 
 PostHog automatically connects revenue data to persons and groups when you use revenue events. For data warehouse sources, you need to map the connection manually.
 
-## Step 1: Add metadata when creating new customers
-
-<<<<<<< HEAD
 ## Automatic person join with Stripe
 
 When you connect Stripe as a revenue data source, PostHog automatically creates a join between your Stripe customers and PostHog persons. This join uses the `metadata.posthog_person_distinct_id` field on your Stripe customers to match them with the corresponding persons in PostHog.
 
 Once this join is created, you can query revenue fields like `$virt_mrr` and `$virt_revenue` directly from the persons table.
 
-## Setting up Stripe customer metadata
-
-To enable the automatic join, store the PostHog distinct ID on each Stripe customer as a metadata field. This lets PostHog match Stripe customers with the right persons.
-
-When creating or updating a customer in Stripe, add a `posthog_person_distinct_id` field to the customer's metadata. The value should be the PostHog distinct ID for that user.
-
-Here are examples using the Stripe SDKs:
-
-<MultiLanguage>
-
-```node
-const stripe = require('stripe')('sk_test_...');
-
-// When creating a new customer
-const customer = await stripe.customers.create({
-  email: 'user@example.com',
-  metadata: {
-    posthog_person_distinct_id: 'user-distinct-id-123'
-  }
-});
-
-// When updating an existing customer
-await stripe.customers.update('cus_123', {
-  metadata: {
-    posthog_person_distinct_id: 'user-distinct-id-123'
-  }
-});
-```
-
-```python
-import stripe
-
-stripe.api_key = "sk_test_..."
-
-# When creating a new customer
-customer = stripe.Customer.create(
-    email="user@example.com",
-    metadata={
-        "posthog_person_distinct_id": "user-distinct-id-123"
-    }
-)
-
-# When updating an existing customer
-stripe.Customer.modify(
-    "cus_123",
-    metadata={
-        "posthog_person_distinct_id": "user-distinct-id-123"
-    }
-)
-```
-
-```ruby
-require 'stripe'
-
-Stripe.api_key = 'sk_test_...'
-
-# When creating a new customer
-customer = Stripe::Customer.create({
-  email: 'user@example.com',
-  metadata: {
-    posthog_person_distinct_id: 'user-distinct-id-123'
-  }
-})
-
-# When updating an existing customer
-Stripe::Customer.update(
-  'cus_123',
-  {
-    metadata: {
-      posthog_person_distinct_id: 'user-distinct-id-123'
-    }
-  }
-)
-```
-
-</MultiLanguage>
-
-Replace `'user-distinct-id-123'` with the actual PostHog distinct ID for each user. You can get this from your PostHog SDK using [`posthog.get_distinct_id()`](/docs/libraries/js#get-the-current-users-distinct-id).
-
 <ProductScreenshot
   imageLight = "https://res.cloudinary.com/dmukukwp6/image/upload/Screenshot_2025_09_05_at_16_20_38_743c93fff2.png"
   imageDark = "https://res.cloudinary.com/dmukukwp6/image/upload/Screenshot_2025_09_05_at_16_20_29_8ec0f4633a.png"
-  alt="Revenue analytics persons and groups setup" 
+  alt="Revenue analytics persons and groups setup"
   classes="rounded"
 />
-||||||| 490a9464c
-<ProductScreenshot
-  imageLight = "https://res.cloudinary.com/dmukukwp6/image/upload/Screenshot_2025_09_05_at_16_20_38_743c93fff2.png"
-  imageDark = "https://res.cloudinary.com/dmukukwp6/image/upload/Screenshot_2025_09_05_at_16_20_29_8ec0f4633a.png"
-  alt="Revenue analytics persons and groups setup" 
-  classes="rounded"
-/>
-=======
+
+## Step 1: Add metadata when creating new customers
+
 Search your codebase for where you create Stripe customers (e.g. `stripe.Customer.create` or equivalent) and add the `posthog_person_distinct_id` metadata field.
 
 <MultiLanguage>
@@ -512,7 +425,6 @@ var session = await sessionService.CreateAsync(options);
 </MultiLanguage>
 
 > **How does this work?** PostHog looks for `posthog_person_distinct_id` in the metadata of subscriptions, charges, and invoices tied to each Stripe customer. If the customer object doesn't have the metadata directly, PostHog uses the value from the most recently created child object.
->>>>>>> master
 
 Once this is connected you'll be able to properly see who your top customers are in the [Top customers dashboard](https://app.posthog.com/revenue_analytics#top-customers).
 
