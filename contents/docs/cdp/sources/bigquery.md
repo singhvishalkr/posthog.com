@@ -71,12 +71,14 @@ To securely connect your BigQuery account to PostHog, create a dedicated service
 
 PostHog creates and deletes [temporary tables](https://cloud.google.com/bigquery/docs/writing-results#temporary_and_permanent_tables) when querying your data. This is necessary for handling large BigQuery tables. Temporary tables help break down large data processing tasks into manageable chunks. However, they incur storage and query costs in BigQuery while they exist. We delete them as soon as the job is done.
 
-PostHog requires a unique primary key when importing data and will look for it in this order:
+PostHog requires a unique primary key when importing data. By default, PostHog auto-detects the primary key in this order:
 
-1. PostHog will use the `id` column as the primary key if it exists
-2. If the `id` column does not exist, PostHog will use any primary key constraints in the table
+1. PostHog uses the `id` column as the primary key if it exists
+2. If there's no `id` column, PostHog uses any primary key constraints in the table
 
-After selecting the primary key, PostHog will query the table to see if the column is unique. If it is not, PostHog will fail the import with a `DuplicatePrimaryKeysException`. If you have no `id` column and no primary key constraints, future incremental imports will fail.
+If you're importing BigQuery views or tables with non-standard primary key names, you can [specify custom primary key columns](/docs/cdp/sources#specifying-custom-primary-keys) during setup. This is especially useful for views, which don't have constraint metadata for PostHog to detect.
+
+After selecting the primary key, PostHog queries the table to verify the column contains unique values. If duplicates exist, the import fails with a `DuplicatePrimaryKeysException`. Without a detectable or manually specified primary key, incremental imports will fail.
 
 ### Costs
 

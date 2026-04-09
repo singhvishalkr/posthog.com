@@ -86,6 +86,27 @@ As with incremental syncing, selecting a nullable field as the cursor skips any 
 
 This reloads the whole table on every sync. This is great for tables with common data deletions or ones without an incrementing field (such as a `updated_at` timestamp).
 
+## Primary keys
+
+Incremental sync requires a primary key to identify and deduplicate rows. By default, PostHog auto-detects the primary key from your source:
+
+1. If your table has an `id` column, PostHog uses it as the primary key
+2. If there's no `id` column, PostHog looks for primary key constraints defined in the database
+
+### Specifying custom primary keys
+
+When auto-detection doesn't match your data, you can specify custom primary key columns during source setup. This is useful when:
+
+- Your primary key column has a non-standard name (like `_id` from MongoDB ETL pipelines)
+- You're importing from BigQuery views, which don't have constraint metadata
+- Your table uses a composite primary key across multiple columns
+
+In the sync method modal, PostHog shows the detected primary key as the default. Override this by selecting different columns from your table schema.
+
+> **Note:** Once you run the first sync with incremental sync enabled, the primary key becomes immutable. To change it, delete and recreate the schema. You can still switch from incremental to append or full table sync.
+
+If you select columns that allow null values, PostHog displays a warning. Null values in primary key columns can cause unexpected deduplication behavior, so prefer non-nullable columns when possible.
+
 ## Syncing
 
 Once you add a source, you can see its status, sync frequency, and last successful run in the [sources page](https://app.posthog.com/data-management/sources). You can also reload or delete sources here.
