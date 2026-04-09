@@ -12,6 +12,7 @@ In your [Account settings](https://us.posthog.com/settings/user-api-keys#persona
 
 - [Authentication](#authentication)
 - [Personal API keys](#personal-api-keys)
+- [Connected apps](#connected-apps)
 - [Notifications](#notifications)
 - [Theming options](#theming-and-customization)
 
@@ -56,6 +57,16 @@ If you're feeling lonely and would like Max to keep you company, you can find hi
 You can customize which apps appear in the **Apps** section of the sidebar. Click the pencil icon next to **Apps** to enter edit mode, then use the checkboxes to show or hide individual apps. Click the checkmark to save your changes.
 
 To control whether new products are automatically added to your sidebar, go to [**Account > Customization**](https://app.posthog.com/settings/user-customization#sidebar-auto-suggest) and toggle **Automatically suggest new apps**.
+
+## Connected apps
+
+Connected apps are third-party OAuth applications – like Claude Code, Cursor, or other development tools – that you've authorized to access your PostHog account. These apps use OAuth tokens to interact with PostHog on your behalf.
+
+To view your connected apps, go to [your account settings](https://us.posthog.com/settings/user) and find the **Connected apps** section. Here you can see each authorized app, its verification status, the scopes it has access to, and when you authorized it.
+
+### Revoking access
+
+To revoke an app's access, click **Revoke** next to it. This removes all active tokens for that app, immediately preventing it from accessing your account. If you want to use the app again later, you'll need to re-authorize it.
 
 ## Deleting your account
 
