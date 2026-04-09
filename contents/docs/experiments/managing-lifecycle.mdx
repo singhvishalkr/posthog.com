@@ -76,6 +76,10 @@ To copy an experiment to another project:
 The copied experiment is created as a draft in the target project with:
 
 - The experiment's metrics, parameters, and configuration
-- A new feature flag that is disabled by default (if a flag with the same key exists, the key is deduplicated – for example, `my-flag-copy`)
+- A new feature flag that is disabled by default
+
+If a feature flag with the same key already exists in the target project and has matching variants, that existing flag is reused instead of creating a new one.
 
 Saved metrics and holdouts are not copied because they are project-specific resources. If your experiment uses saved metrics, you'll need to recreate them in the target project.
+
+> **Note:** The copy option only appears when your organization has multiple projects.
