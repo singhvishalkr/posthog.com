@@ -39,6 +39,7 @@ Try these with your MCP-enabled agent:
 - `Create a funnel from user_signed_up to project_created to insight_viewed.`
 - `What's the retention rate for users who completed onboarding?`
 - `Run a HogQL query to find the most active users by event count this month.`
+- `Run all insights on my Growth Metrics dashboard and summarize the results.`
 
 ## Dashboard tools
 
@@ -49,6 +50,7 @@ You can also create and manage dashboards from your editor:
 | `dashboard-create` | Create a new dashboard. |
 | `dashboard-get` | Get a dashboard and its tiles. |
 | `dashboards-get-all` | List all dashboards in the project. |
+| `dashboard-insights-run` | Run all insights on a dashboard and return their results. Supports an LLM-friendly text table format with `format=optimized`, or raw JSON with `format=json`. Use `refresh` to control caching (`force_cache`, `blocking`, `force_blocking`). |
 | `add-insight-to-dashboard` | Add an existing insight to a dashboard. |
 | `dashboard-update` | Update a dashboard's name or description. |
 | `dashboard-delete` | Delete a dashboard. |
