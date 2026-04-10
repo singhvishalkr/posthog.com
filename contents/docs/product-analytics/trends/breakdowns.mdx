@@ -58,23 +58,15 @@ To just see the total count, switch to a total value bar chart or table like the
   alt="Sample breakdown bar chart"
 />
 
-<<<<<<< HEAD
 ## Breakdown limits
 
-Trends insights support up to **3 breakdowns** at a time. When you hit this limit, the **+ Add breakdown** button is disabled.
+Trends insights support up to **3 breakdowns** at a time. Other insight types support a single breakdown (funnels support a single cohort breakdown). When you hit this limit, the **+ Add breakdown** button is disabled.
 
 If you need more flexibility, combine properties into a single breakdown using SQL expressions, or convert your insight to SQL for unlimited breakdowns.
 
 ### Combine properties with SQL
 
 To break down by browser and operating system together, use a SQL expression like:
-||||||| 7746bd124
-Breakdowns support up to 3 properties at a time, unless you use SQL. To breakdown by the combination of browser and operating system, for example, you can use the following expression:
-=======
-Trends insights support up to 3 breakdowns at a time. Other insight types support a single breakdown (funnels support a single cohort breakdown). When you reach the limit, the **+ Breakdown** button becomes disabled with a tooltip explaining why. If you need more flexibility, you can use [SQL insights](/docs/sql) which don't have this limitation.
-
-To breakdown by the combination of browser and operating system, for example, you can use the following SQL expression:
->>>>>>> master
 
 ```
 concat(properties.$browser, ' - ', properties.$os)
