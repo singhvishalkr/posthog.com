@@ -35,9 +35,11 @@ _Ben experiments to find more winners:_
 Campaigns are all [tracked in Lemlist](https://app.lemlist.com/teams/tea_kvdy3nLu9KEA4QPiD/campaigns-next) - these change week-to-week. 
 
 Manual (Lorena):
+
 1. Filled contact sales but then went silent, never talked to an AE
 2. Tried PostHog but did not convert - signed up but went inactive, never paid, never talked to an AE (in PostHog Data Warehouse)
 3. Engineers + Engineering Managers who follow us on LinkedIn but are not customers
+4. Event attendees
 
 Not started yet:
 1. Closed lost opportunities (new biz _and_ renewals) 5+ months old where reason was 'unresponsive'
