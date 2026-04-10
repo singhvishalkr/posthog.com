@@ -91,4 +91,16 @@ You can also create filters based on pre-prepared cohorts of users, which is esp
 
 The internal and test user filter is controlled with a simple toggle whenever you create a new insight, or edit an existing one. Turn it on and everything in your filter group will be sifted out; turn it off and you’ll see results from all users together. Simple!
 
+## Identifying internal and test users in the UI
+
+When a user matches your internal user filters, PostHog sets the `$internal_or_test_user` person property to `true` on them.
+
+You can see this property in several places:
+
+- **Person profiles** - Users with this property show a test tube icon next to their name, indicating they’re flagged as internal or test users.
+- **Session recordings** - The same indicator appears in recording lists and detail views.
+- **Events and activity** - Internal users are visually distinguished wherever person information appears.
+
+This helps you quickly spot which users are flagged as internal or test users, even when you’re not actively filtering them out. If you see this indicator on a user you don’t expect, check your [internal user filter settings](https://us.posthog.com/settings/project#internal-user-filtering) to understand why they matched.
+
 <NewsletterForm />
