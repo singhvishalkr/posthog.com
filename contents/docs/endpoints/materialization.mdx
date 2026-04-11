@@ -45,6 +45,8 @@ Materialization is not available when:
 
 - **The endpoint has incompatible variables** - Only certain [variable](/docs/endpoints/variables) types are supported. See the compatibility table below.
 - **The endpoint is inactive** - Only active endpoints and their versions are materialized.
+- **The insight uses cohort breakdowns** - Cohort breakdowns produce complex queries that cannot be properly reconstructed from materialized data.
+- **The insight uses compare mode** - Compare mode doubles the series count in a way that cannot be reliably materialized.
 
 ### Variable compatibility
 
@@ -92,5 +94,7 @@ When you execute an endpoint:
 
 1. If materialization is **enabled and complete**, PostHog returns the materialized results
 2. If materialization is **running or failed**, PostHog executes the query directly
+
+Insight-based endpoints (Trends, Lifecycle, Retention) return the same response shape whether materialized or not. You can enable or disable materialization without changing your integration code.
 
 See [Execution](/docs/endpoints/execution) for more details on how PostHog chooses between materialized and direct execution.
