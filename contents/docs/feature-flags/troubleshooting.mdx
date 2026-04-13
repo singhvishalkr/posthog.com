@@ -16,6 +16,16 @@ This page covers troubleshooting for Feature Flags. For setup, see the [installa
 
 <AskAIInput placeholder="Type your question and hit enter..." />
 
+## Debug flag evaluation with the Testing tab
+
+The **Testing** tab on any feature flag's detail page lets you test how the flag evaluates for specific users. Enter a distinct ID or person ID, click **Test evaluation**, and see the result with detailed condition analysis explaining why each condition matched or didn't.
+
+This helps when a user gets an unexpected flag value. The analysis shows each condition set in your flag's configuration and explains the evaluation outcome for that user.
+
+You can also:
+- **Test with historical data** - Set a timestamp to evaluate the flag using the person's properties as they were at that point. This helps debug issues where properties have changed since the problematic behavior occurred.
+- **Test group-based flags** - If your flag targets groups, include the relevant group information in the test.
+
 ## Why is my feature flag not working as expected?
 
 Here's a list of suggestions to troubleshoot your flag:
