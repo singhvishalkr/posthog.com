@@ -98,21 +98,28 @@ But if you need more control, we also provide a `rageclick` config that takes an
 
 ## Configuring logs
 
-The `logs` config controls how browser logs are captured and sent to PostHog via OpenTelemetry.
+The `logs` config controls how browser logs are captured and sent to PostHog via OpenTelemetry. See the [Logs usage documentation](/docs/libraries/js/usage#logs) for details on using `posthog.logger` and `posthog.captureLog()`.
 
 | Attribute | Description |
 |-----------|-------------|
-| `captureConsoleLogs`<br/><br/>**Type:** Boolean<br/>**Default:** `undefined` | When enabled, automatically captures `console.log`, `console.warn`, `console.error`, etc. and sends them to PostHog as structured logs. |
-| `serviceName`<br/><br/>**Type:** String<br/>**Default:** `'posthog-browser-logs'` | The service name used in [OpenTelemetry resource attributes](https://opentelemetry.io/docs/specs/otel/resource/semantic_conventions/) for logs. Customize this to distinguish logs from different frontend applications or environments when viewing them in PostHog. |
+| `serviceName`<br/><br/>**Type:** String<br/>**Default:** `'unknown_service'` | The service name used in [OpenTelemetry resource attributes](https://opentelemetry.io/docs/specs/otel/resource/semantic_conventions/) for logs. Customize this to distinguish logs from different frontend applications. |
+| `environment`<br/><br/>**Type:** String<br/>**Default:** `undefined` | The deployment environment (e.g., `'production'`, `'staging'`). Attached as a resource attribute to all logs. |
+| `serviceVersion`<br/><br/>**Type:** String<br/>**Default:** `undefined` | The version of your application. Attached as a resource attribute to all logs. |
+| `resourceAttributes`<br/><br/>**Type:** Object<br/>**Default:** `undefined` | Additional [OpenTelemetry resource attributes](https://opentelemetry.io/docs/specs/otel/resource/semantic_conventions/) to attach to all logs (e.g., `'host.name'`, `'cloud.region'`). |
 
 Example:
 
-```js
+```js-web
 posthog.init('<ph_project_api_key>', {
-  api_host: '<ph_client_api_host>',
-  logs: {
-    serviceName: 'my-frontend-app',
-  },
+    api_host: '<ph_client_api_host>',
+    logs: {
+        serviceName: 'checkout-frontend',
+        environment: 'production',
+        serviceVersion: '1.2.3',
+        resourceAttributes: {
+            'deployment.environment': 'us-east-1',
+        },
+    },
 })
 ```
 

@@ -382,17 +382,54 @@ posthog.captureException(error, additionalProperties)
 
 ## Logs
 
-Use the `captureLog` method to send structured log entries from your browser to PostHog. Logs are sent to PostHog's [Logs](/docs/logs) product as OTLP-compliant JSON.
+Send structured log entries from your browser to PostHog's [Logs](/docs/logs) product. Logs are delivered as OTLP-compliant JSON and can be correlated with session replays, user activity, and distributed traces.
 
-```js
+### Configuration
+
+Configure log settings during SDK initialization:
+
+```js-web
+posthog.init('<ph_project_api_key>', {
+    logs: {
+        serviceName: 'checkout-frontend',     // defaults to 'unknown_service'
+        environment: 'production',
+        serviceVersion: '1.2.3',
+        resourceAttributes: {                 // additional OTel resource attributes
+            'deployment.environment': 'us-east-1',
+        },
+    },
+})
+```
+
+### Logger convenience methods
+
+The simplest way to send logs is with the `posthog.logger` methods:
+
+```js-web
+posthog.logger.info('Checkout completed', { order_id: 'ord_789' })
+posthog.logger.error('Payment failed', { error_code: 'E001' })
+posthog.logger.warn('Inventory running low', { sku: 'WIDGET-42' })
+posthog.logger.debug('Cache hit', { key: 'user_preferences' })
+```
+
+Available methods: `trace`, `debug`, `info`, `warn`, `error`, `fatal`.
+
+### Full options API
+
+For more control, use `captureLog` directly:
+
+```js-web
 posthog.captureLog({
     body: 'Payment processed successfully',
     level: 'info',
     attributes: {
         order_id: 'order_12345',
         amount: 99.99,
-        currency: 'USD'
-    }
+        currency: 'USD',
+        tags: ['checkout', 'v2']
+    },
+    trace_id: 'abc123def456',  // optional, for OTel correlation
+    span_id: 'span789'         // optional
 })
 ```
 
@@ -402,8 +439,7 @@ posthog.captureLog({
 |-----------|------|-------------|
 | `body` | string | The log message |
 | `level` | string | Severity level: `trace`, `debug`, `info`, `warn`, `error`, `fatal` |
-| `attributes` | object | Structured attributes to attach to the log entry |
-| `resource_attributes` | object | Resource-level attributes (e.g., service name, version) |
+| `attributes` | object | Structured attributes to attach to the log entry. Supports strings, numbers, booleans, arrays, and objects. |
 | `trace_id` | string | Optional trace ID for correlating logs with distributed traces |
 | `span_id` | string | Optional span ID for correlating logs with specific spans |
 
@@ -416,15 +452,17 @@ PostHog automatically attaches context to each log entry:
 - Current URL
 - Active [feature flags](/docs/feature-flags)
 
-### Buffered delivery
+### Buffering and rate limiting
 
 Logs are buffered and flushed every three seconds or when the buffer reaches 100 records. On page unload, remaining logs are flushed using `sendBeacon` to ensure delivery.
 
-### Example: Logging with trace context
+To prevent runaway logging from impacting your bill, the SDK enforces a rate limit of 1,000 logs per flush interval. When exceeded, additional logs are dropped and a warning is logged to the console.
 
-If you're using distributed tracing, you can correlate browser logs with backend traces:
+### Example: Correlating with distributed traces
 
-```js
+If you're using OpenTelemetry or another distributed tracing system, pass trace context to correlate browser logs with backend spans:
+
+```js-web
 posthog.captureLog({
     body: 'API request completed',
     level: 'info',
@@ -433,8 +471,8 @@ posthog.captureLog({
         status_code: 200,
         duration_ms: 342
     },
-    trace_id: 'abc123def456',
-    span_id: 'span789'
+    trace_id: currentTraceId,
+    span_id: currentSpanId
 })
 ```
 
