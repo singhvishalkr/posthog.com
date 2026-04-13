@@ -39,32 +39,13 @@ Draft workflows can also be archived, even if they contain invalid configuration
 
 ## Triggers
 
-<<<<<<< HEAD
-Every workflow starts with a trigger. Triggers determine when your workflow runs. There are three types of triggers:
-||||||| 4d77cfa7f
-Every workflow starts with a trigger. Triggers represent actions taken by users that kick off the workflow. There are two types of triggers:
-=======
 Every workflow starts with a trigger. Triggers define what kicks off the workflow. There are three types of triggers:
->>>>>>> master
 
-<<<<<<< HEAD
-| Trigger type | Description |
-|--------------|-------------|
-| Event trigger | Runs when a captured [PostHog event](/docs/data/events) occurs (e.g. `signed up`) |
-| Webhook trigger | Programmatically start a workflow via an HTTP request |
-| Schedule trigger | Runs on a recurring schedule (e.g. every Monday at 9am) |
-||||||| 4d77cfa7f
-| Trigger type | Description |
-|--------------|-------------|
-| Event trigger | A captured [PostHog event](/docs/data/events) (e.g. `signed up`) |
-| Webhook trigger | Programmatically start a workflow with a webhook |
-=======
-| Trigger type     | Description                                                          |
-| ---------------- | -------------------------------------------------------------------- |
-| Event trigger    | A captured [PostHog event](/docs/data/events) (e.g. `signed up`)     |
-| Webhook trigger  | Programmatically start a workflow with a webhook                     |
-| Schedule trigger | Run a workflow on a recurring schedule (e.g. daily, weekly, monthly) |
->>>>>>> master
+| Trigger type     | Description                                                              |
+| ---------------- | ------------------------------------------------------------------------ |
+| Event trigger    | Runs when a captured [PostHog event](/docs/data/events) occurs (e.g. `signed up`) |
+| Webhook trigger  | Programmatically start a workflow via an HTTP request                    |
+| Schedule trigger | Runs on a recurring schedule (e.g. every Monday at 9am)                  |
 
 ### Event triggers
 
@@ -92,7 +73,6 @@ To set this up:
 3. Optionally add delays, branching, person property updates, or dispatches.
 4. Enable the workflow and point your external system at the webhook URL which can be copied from the trigger step.
 
-<<<<<<< HEAD
 ### Schedule triggers
 
 Schedule triggers run your workflow on a recurring schedule without targeting specific persons. They're ideal for cron-style automations like generating weekly reports, sending Monday morning team summaries, or running periodic data syncs.
@@ -108,35 +88,16 @@ To set up a schedule trigger:
 
 Schedule triggers have three statuses displayed next to the trigger dropdown:
 
-| Status | Description |
-|--------|-------------|
-| Active | The schedule is running and will fire at the next scheduled time |
-| Paused | The schedule is temporarily stopped (the workflow is disabled) |
-| Completed | The schedule has finished its run (e.g. a one-time schedule that already fired) |
+| Status    | Description                                                                        |
+| --------- | ---------------------------------------------------------------------------------- |
+| Active    | The schedule is running and will fire at the next scheduled time                   |
+| Paused    | The schedule is temporarily stopped (the workflow is disabled)                     |
+| Completed | The schedule has finished its run (e.g. a one-time schedule that already fired)    |
 
 If a completed schedule's configuration is updated, it automatically resets to active and begins running again.
 
 > **Note:** Schedule triggers create a synthetic `$workflow_scheduled` event when they fire, which you can use for tracking workflow executions in your analytics.
 
-||||||| 4d77cfa7f
-=======
-### Schedule triggers
-
-Schedule triggers run a workflow on a recurring basis, independent of user actions. Use them for cron-style automations like "run every Monday at 9am" or "run daily at midnight."
-
-Unlike event and webhook triggers, schedule triggers don't require a person audience. When you select **Schedule** as the trigger type, configure a recurring pattern using the schedule picker (e.g. daily, weekly, or monthly).
-
-Schedule triggers display a status badge next to the trigger type:
-
-| Status    | Description                                                  |
-| --------- | ------------------------------------------------------------ |
-| Active    | The schedule is running and will fire at the next occurrence |
-| Paused    | The schedule is paused because the workflow is disabled      |
-| Completed | The schedule has finished all its occurrences                |
-
-If you update a completed schedule's configuration, its status resets to **Active**.
-
->>>>>>> master
 ## Dispatches
 
 Dispatches are the messages you send, mail, slack, SMS, webhook, or any PostHog real time destinations. There are 4 main types of dispatches:
