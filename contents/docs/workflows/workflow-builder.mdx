@@ -77,6 +77,8 @@ To set this up:
 
 Schedule triggers run your workflow on a recurring schedule without targeting specific persons. They're ideal for cron-style automations like generating weekly reports, sending Monday morning team summaries, or running periodic data syncs.
 
+> **Important:** Schedule triggers run without a person or event context. Actions that reference person properties like `{{person.properties.email}}` won't have access to user data. If your workflow needs to target specific users, use a batch trigger instead.
+
 To set up a schedule trigger:
 
 1. Create a new workflow and select **Schedule** as the trigger type.
