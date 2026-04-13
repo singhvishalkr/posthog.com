@@ -185,6 +185,19 @@ After the analysis completes, you can rate it with a thumbs up or thumbs down.
 
 > **Note:** AI-powered refresh analysis isn't available when dashboard filter overrides, URL filters, or URL variables are applied.
 
+## Copying dashboard templates between projects
+
+If your organization has multiple PostHog projects, you can copy dashboard templates between them. This is helpful for reusing custom templates across environments like staging and production, or sharing them with other teams.
+
+To copy a template to another project:
+
+1. Navigate to the dashboard template you want to copy.
+2. Select the **Projects** tab.
+3. Select the target project.
+4. Click **Copy**.
+
+> **Note:** The copy option only appears when your organization has multiple projects.
+
 ## Managing dashboards with Terraform
 
 For teams practicing infrastructure-as-code, you can manage PostHog dashboards and insights using the [PostHog Terraform Provider](https://registry.terraform.io/providers/PostHog/posthog/latest).
