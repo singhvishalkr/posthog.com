@@ -2401,6 +2401,10 @@ export const docsMenu = {
                             url: '/docs/api',
                         },
                         {
+                            name: 'OAuth integration',
+                            url: '/docs/api/oauth',
+                        },
+                        {
                             name: 'Popular',
                         },
                         {
