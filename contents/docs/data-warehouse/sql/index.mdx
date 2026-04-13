@@ -8,11 +8,39 @@ availability:
 
 The [SQL editor](https://us.posthog.com/sql) enables you to directly access all your data in PostHog, from PostHog-specific `events` and `persons` tables to your external sources, using [SQL queries](/blog/sql-for-analytics).
 
+## Running queries
+
+Click **Run** or press `Cmd` + `Enter` (Mac) or `Ctrl` + `Enter` (Windows/Linux) to execute a query.
+
+### Multiple queries
+
+Separate multiple queries in the same editor with semicolons (`;`). When you run, only the query under your cursor executes. The active query is highlighted with a subtle blue background.
+
+```sql
+SELECT * FROM events LIMIT 10;
+SELECT COUNT(*) FROM persons;
+SELECT event, COUNT(*) FROM events GROUP BY event
+```
+
+If you select text before running, the selection runs instead of the query under the cursor.
+
+### Running subqueries
+
+Press `Cmd` + `Shift` + `Enter` (Mac) or `Ctrl` + `Shift` + `Enter` (Windows/Linux) to run only the innermost subquery at your cursor position. The subquery that will execute is highlighted with a darker background.
+
+This is useful for debugging complex queries with nested SELECTs. For example, if your cursor is inside the inner SELECT below, pressing `Cmd` + `Shift` + `Enter` runs just `SELECT id FROM events`:
+
+```sql
+SELECT * FROM (SELECT id FROM events) LIMIT 10
+```
+
+Subqueries that reference CTEs or other elements outside their scope are marked with a wavy yellow underline. Hover over them to see why they may fail if run standalone.
+
 ## SQL commands
 
 You create SQL queries out of a list of commands that shape what data, filters, aggregations, and ordering we want to see. 
 
-> SQL queries in PostHog don't require the trailing semicolon (`;`) of traditional SQL queries.
+> A trailing semicolon (`;`) is optional for single queries. Use semicolons to separate [multiple queries](#multiple-queries) in the same editor.
 
 ### SELECT
 
