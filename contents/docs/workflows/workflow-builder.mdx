@@ -39,32 +39,14 @@ Draft workflows can also be archived, even if they contain invalid configuration
 
 ## Triggers
 
-<<<<<<< HEAD
-Every workflow starts with a trigger. Triggers represent actions taken by users that kick off the workflow. There are three types of triggers:
-||||||| 4d77cfa7f
-Every workflow starts with a trigger. Triggers represent actions taken by users that kick off the workflow. There are two types of triggers:
-=======
-Every workflow starts with a trigger. Triggers define what kicks off the workflow. There are three types of triggers:
->>>>>>> master
+Every workflow starts with a trigger. Triggers define what kicks off the workflow. There are four types of triggers:
 
-<<<<<<< HEAD
-| Trigger type | Description |
-|--------------|-------------|
-| Event trigger | A captured [PostHog event](/docs/data/events) (e.g. `signed up`) |
-| Webhook trigger | Programmatically start a workflow with a webhook |
-| Batch trigger | Run a workflow against a filtered set of persons on a recurring schedule |
-||||||| 4d77cfa7f
-| Trigger type | Description |
-|--------------|-------------|
-| Event trigger | A captured [PostHog event](/docs/data/events) (e.g. `signed up`) |
-| Webhook trigger | Programmatically start a workflow with a webhook |
-=======
-| Trigger type     | Description                                                          |
-| ---------------- | -------------------------------------------------------------------- |
-| Event trigger    | A captured [PostHog event](/docs/data/events) (e.g. `signed up`)     |
-| Webhook trigger  | Programmatically start a workflow with a webhook                     |
-| Schedule trigger | Run a workflow on a recurring schedule (e.g. daily, weekly, monthly) |
->>>>>>> master
+| Trigger type     | Description                                                              |
+| ---------------- | ------------------------------------------------------------------------ |
+| Event trigger    | A captured [PostHog event](/docs/data/events) (e.g. `signed up`)         |
+| Webhook trigger  | Programmatically start a workflow with a webhook                         |
+| Schedule trigger | Run a workflow on a recurring schedule (e.g. daily, weekly, monthly)     |
+| Batch trigger    | Run a workflow against a filtered set of persons on a recurring schedule |
 
 ### Event triggers
 
@@ -92,7 +74,6 @@ To set this up:
 3. Optionally add delays, branching, person property updates, or dispatches.
 4. Enable the workflow and point your external system at the webhook URL which can be copied from the trigger step.
 
-<<<<<<< HEAD
 ### Batch triggers
 
 Batch triggers run a workflow against a filtered set of persons on a schedule, instead of responding to a real-time event. Examples:
@@ -129,8 +110,6 @@ Schedules must run at most once per hour. Common patterns include:
 
 You can also set an optional end condition to limit how many times a workflow runs or specify an end date.
 
-||||||| 4d77cfa7f
-=======
 ### Schedule triggers
 
 Schedule triggers run a workflow on a recurring basis, independent of user actions. Use them for cron-style automations like "run every Monday at 9am" or "run daily at midnight."
@@ -147,7 +126,6 @@ Schedule triggers display a status badge next to the trigger type:
 
 If you update a completed schedule's configuration, its status resets to **Active**.
 
->>>>>>> master
 ## Dispatches
 
 Dispatches are the messages you send, mail, slack, SMS, webhook, or any PostHog real time destinations. There are 4 main types of dispatches:
