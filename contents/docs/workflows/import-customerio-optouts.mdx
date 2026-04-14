@@ -3,10 +3,12 @@ title: "Import opt-out lists from Customer.io"
 showStepsToc: true
 ---
 
-In this guide we'll walk through importing your **opt-out lists from Customer.io** into PostHog. After following this guide, you will:
+In this guide we'll walk through importing your **opt-out lists from Customer.io** into PostHog and setting up bidirectional sync. After following this guide, you will:
 - Create an API key in Customer.io
 - Export people with subscription preferences
 - Import opt-outs into PostHog
+- Set up real-time sync from Customer.io to PostHog (optional)
+- Set up sync from PostHog to Customer.io (optional)
 
 <Steps>
 
@@ -118,6 +120,58 @@ This will import customers who opted out of specific categories (those with gran
 Once complete, you'll see a success message with a summary of imported opt-outs.
 
 Your Customer.io opt-out lists are now imported into PostHog. These users will automatically be excluded from all future workflow campaigns based on their preferences.
+
+</Step>
+
+<Step title="Set up real-time sync from Customer.io" badge="optional">
+
+Once you've imported your opt-out data, configure a webhook to keep PostHog updated when users change their preferences in Customer.io.
+
+### Configure the webhook in PostHog
+
+In the import modal, you'll see a webhook configuration section after completing the CSV upload. This displays your unique webhook URL and signing secret.
+
+1. Toggle **Enable webhook** to on
+2. Copy your **webhook URL** and **signing secret** – you'll need these for Customer.io
+
+### Configure the webhook in Customer.io
+
+1. Go to **Settings > Webhooks** in your Customer.io dashboard
+2. Click **Add reporting webhook**
+3. Paste your PostHog webhook URL
+4. Paste the signing secret from PostHog
+5. Enable the following event types:
+   - `unsubscribed` – tracks global opt-outs
+   - `subscribed` – tracks when users re-subscribe
+   - `cio_subscription_preferences_changed` – tracks per-topic preference changes
+6. Save the webhook
+
+When users update their subscription preferences in Customer.io, those changes automatically sync to PostHog.
+
+</Step>
+
+<Step title="Set up sync to Customer.io" badge="optional">
+
+When users update their preferences on your PostHog-managed preference page, you can sync those changes back to Customer.io.
+
+### Get your Track API credentials from Customer.io
+
+1. Go to **Settings > Account Settings > API Credentials** in your Customer.io dashboard
+2. Under **Track API**, copy your:
+   - **Site ID**
+   - **API key**
+3. Note your **region** (US or EU)
+
+### Configure in PostHog
+
+In the import modal's outbound sync step:
+
+1. Enter your **Site ID** and **API key**
+2. Select your Customer.io **region** (defaults to match your PostHog instance region)
+3. Toggle **Enable sync to Customer.io** to on
+4. Click **Save**
+
+When users update their subscription preferences through PostHog, those changes automatically sync to Customer.io.
 
 </Step>
 
