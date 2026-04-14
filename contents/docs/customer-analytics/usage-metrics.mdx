@@ -8,7 +8,7 @@ import CustomerAnalyticsBetaWarning from './_snippets/customer-analytics-beta-wa
 
 <CustomerAnalyticsBetaWarning />
 
-Usage metrics let you define global activity measurements and track them for each customer. Any event performed by your users can be turned into usage metrics, so that you can understand their activity at a glance and identify expansion opportunities or churn risk
+Usage metrics let you define global activity measurements and track them for each customer. Any event performed by your users can become a usage metric, giving you an at-a-glance view of customer activity to identify expansion opportunities or churn risk.
 
 <ProductScreenshot
     imageLight="https://res.cloudinary.com/dmukukwp6/image/upload/q_auto,f_auto/pasted_image_2025_12_19_T12_47_09_424_Z_893c3cd740.png"
@@ -17,14 +17,51 @@ Usage metrics let you define global activity measurements and track them for eac
     classes="rounded"
 />
 
+## Why usage metrics matter
+
+Usage metrics surface customer health signals you'd otherwise need custom dashboards to see. They help you:
+
+- **Spot expansion opportunities** – Find customers hitting usage limits or heavily using specific features
+- **Detect churn risk** – Flag customers whose activity is declining before they leave
+- **Understand product engagement** – See which features drive value for different customer segments
+- **Enable customer success workflows** – Arm your team with context before conversations
+
+## Aggregation types
+
+Usage metrics support two aggregation types that determine how matched events are calculated:
+
+### Count
+
+Count aggregation tallies how many times an event occurs. This is the default and works for most use cases where you want to track activity frequency.
+
+**When to use count:**
+
+- Tracking how often something happens (API calls, logins, feature usage)
+- Measuring frequency of actions
+- Counting errors or exceptions
+
+### Sum
+
+Sum aggregation totals a numeric property value across all matched events. Use this when you need cumulative values rather than event frequency.
+
+**When to use sum:**
+
+- Tracking revenue or transaction amounts
+- Measuring token or credit consumption
+- Summing bandwidth, storage, or resource usage
+- Aggregating any property with numeric values
+
+When you select sum, you also specify which property to aggregate. For example, sum the `amount` property on `payment_completed` events to track total revenue.
 
 ## Example usage metrics
 
-Here are some examples of usage metrics for SaaS products:
+Here are examples of usage metrics for SaaS products:
 
-| Metric | Events to match | Use case |
-| --- | --- | --- |
-| API calls | `api_request` | Identify heavy API users for expansion |
-| Feature adoption | `feature_x_used` | Track adoption of new features |
-| Error rate | `$exception` | Spot customers hitting issues |
-| Export usage | `export_created` | Find power users |
+| Metric | Events | Aggregation | Property | Use case |
+| --- | --- | --- | --- | --- |
+| API calls | `api_request` | Count | - | Identify heavy API users for expansion |
+| Total revenue | `payment_completed` | Sum | `amount` | Track customer spend over time |
+| Tokens consumed | `llm_request` | Sum | `tokens_used` | Monitor AI usage for billing |
+| Feature adoption | `feature_x_used` | Count | - | Track adoption of new features |
+| Error rate | `$exception` | Count | - | Spot customers hitting issues |
+| Storage used | `file_uploaded` | Sum | `file_size` | Track storage consumption |

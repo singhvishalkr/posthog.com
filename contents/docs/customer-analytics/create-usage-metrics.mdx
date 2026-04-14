@@ -25,10 +25,21 @@ You can create usage metrics in two ways:
 | Field | Description |
 | --- | --- |
 | **Name** | The column title shown in customer lists |
-| **Interval** | Time period for the metric: 7, 30 or 90 days |
-| **Format** | How the value should be formated: Numeric or currency  |
-| **Match events** | Which events to count toward this metric |
+| **Interval** | Time period for the metric: 7, 30, or 90 days |
+| **Format** | How the value displays: Numeric or currency  |
+| **Aggregation type** | How to calculate the metric: Count or Sum |
+| **Property** | When using Sum, the numeric property to aggregate |
+| **Match events** | Which events to include in the metric |
 | **Filters** | Additional conditions to narrow down matched events |
+
+### Aggregation type
+
+Choose how the metric calculates values from matched events:
+
+- **Count** - Tallies the number of events. Use this for frequency-based metrics like API calls or logins.
+- **Sum** - Totals a numeric property across events. Use this for value-based metrics like revenue or token consumption.
+
+When you select **Sum**, you must also specify which property to aggregate. For example, to track total revenue, match `payment_completed` events and sum the `amount` property.
 
 ### Match events
 
