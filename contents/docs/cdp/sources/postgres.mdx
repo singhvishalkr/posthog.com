@@ -26,6 +26,38 @@ To link Postgres:
 
 The data warehouse then starts syncing your Postgres data. You can see details and progress in the [sources tab](https://app.posthog.com/data-management/sources).
 
+## CDC (Change Data Capture)
+
+CDC is the recommended sync method for Postgres. It uses logical replication to capture inserts, updates, and deletes in real-time without full table scans.
+
+### Prerequisites
+
+Your Postgres database needs to be configured for CDC. The wizard shows a **What your database needs for CDC** panel listing these requirements:
+
+- **`wal_level=logical`** - On AWS RDS, set the `rds.logical_replication` parameter to `1` in your parameter group
+- **Sufficient replication slots** - Make sure `max_replication_slots` and `max_wal_senders` have available capacity
+- **User with replication privileges** - The database user needs the `REPLICATION` role
+- **Primary keys on tables** - Tables you want to sync must have primary keys
+- **SSL/TLS enabled** - Required for new sources (see note below)
+
+Click **Check database prerequisites** to verify your database meets these requirements before creating the source. The wizard shows which prerequisites pass or fail.
+
+### Self-managed vs PostHog-managed CDC
+
+When setting up CDC, choose between:
+
+- **PostHog-managed** - PostHog creates and manages the replication slot and publication
+- **Self-managed** - You create the replication slot and publication yourself using SQL that PostHog generates for you
+
+With self-managed CDC, after selecting your tables, PostHog shows the SQL commands to run on your database:
+
+- Creating the replication slot
+- Creating the publication
+- Granting necessary permissions
+- Adding tables to the publication
+
+Run these commands on your database, then click **Verify & create source** to confirm the setup works.
+
 <CalloutBox icon="IconWarning" title="SSL/TLS required for new sources" type="caution">
 
 PostgreSQL sources created after February 18, 2026 require SSL/TLS encryption for database connections. Ensure your PostgreSQL database supports SSL/TLS connections before linking. Existing sources created before this date are not affected.

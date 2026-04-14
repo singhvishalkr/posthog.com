@@ -50,6 +50,16 @@ See an example in our [S3 setup docs](/docs/cdp/sources/s3).
 
 When setting up a source, you choose a sync method for each table. The available options depend on the source and table. Some sources also support webhook sync for real-time updates.
 
+### CDC (Change Data Capture)
+
+CDC uses your database's native replication to capture changes in real-time. It's the recommended sync method for databases that support it (like [Postgres](/docs/cdp/sources/postgres)) because it:
+
+- Captures inserts, updates, and deletes in real-time
+- Avoids full table scans
+- Has minimal impact on database performance
+
+CDC requires specific database configuration. See the source-specific documentation for prerequisites and setup instructions.
+
 ### Webhook
 
 Webhook sync receives data updates directly from the source via webhooks. This provides the fastest data freshness with minimal sync overhead. It's available only on sources that support webhooks (like Stripe) and is shown as the recommended option when available.
