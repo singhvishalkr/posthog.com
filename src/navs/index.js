@@ -611,6 +611,10 @@ export const handbookSidebar = [
                 name: 'Writing metadata',
                 url: '/handbook/content/metadata',
             },
+            {
+                name: 'LinkedIn',
+                url: '/handbook/content/linkedin',
+            },
         ],
     },
     {
