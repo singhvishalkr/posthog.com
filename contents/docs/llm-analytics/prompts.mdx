@@ -186,28 +186,49 @@ const prompts = new Prompts({
   host: 'https://us.posthog.com'
 })
 
-// Fetch the latest version of a prompt
-const template = await prompts.get('support-system-prompt', {
+// Fetch the latest version of a prompt with metadata
+const result = await prompts.get('support-system-prompt', {
+  withMetadata: true,
   cacheTtlSeconds: 600,
   fallback: 'You are a helpful assistant.'
 })
 
+// result contains: prompt, name, version, and source
+const { prompt, name, version, source } = result
+// source indicates where the prompt came from: 'api', 'cache', 'stale_cache', or 'code_fallback'
+
 // Or fetch a specific version
-const template = await prompts.get('support-system-prompt', {
+const result = await prompts.get('support-system-prompt', {
+  withMetadata: true,
   version: 2,
   fallback: 'You are a helpful assistant.'
 })
 
 // Compile with variables
-const systemPrompt = prompts.compile(template, {
+const systemPrompt = prompts.compile(result.prompt, {
   company: 'Acme Corp',
   tier: 'premium',
   userName: 'Alice'
 })
 
-// Use in your LLM call
+// Use in your LLM call with prompt metadata for tracing
 // ... your OpenAI/Anthropic call here
 ```
+
+The `withMetadata` option returns a `PromptResult` object with:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `prompt` | `string` | The prompt content |
+| `name` | `string` | The prompt name |
+| `version` | `number` | The prompt version number |
+| `source` | `string` | Where the prompt was loaded from: `'api'`, `'cache'`, `'stale_cache'`, or `'code_fallback'` |
+
+The `source` field helps you understand the prompt's origin:
+- `'api'` – Fetched fresh from the PostHog API
+- `'cache'` – Returned from the local cache (within TTL)
+- `'stale_cache'` – Returned from an expired cache entry because the API request failed
+- `'code_fallback'` – Used the fallback value because both API and cache failed
 
 ## Caching
 
@@ -220,7 +241,29 @@ Prompts are cached on the SDK side to minimize latency and API calls:
 
 ## Linking prompts to traces
 
-To track which prompts and versions are used in which generations, include the `$ai_prompt_name` and `$ai_prompt_version` properties when capturing:
+To track which prompts and versions are used in which generations, include the `$ai_prompt_name` and `$ai_prompt_version` properties when capturing.
+
+When using the JavaScript SDK with `withMetadata: true`, you can pass the metadata directly from the prompt result:
+
+```typescript
+const result = await prompts.get('support-system-prompt', {
+  withMetadata: true,
+  fallback: 'You are a helpful assistant.'
+})
+
+const systemPrompt = prompts.compile(result.prompt, { company: 'Acme Corp' })
+
+const response = await openai.chat.completions.create({
+    model: "gpt-5",
+    messages: [{ role: "system", content: systemPrompt }],
+    posthogProperties: {
+        $ai_prompt_name: result.name,
+        $ai_prompt_version: result.version
+    }
+})
+```
+
+For Python or when not using `withMetadata`, pass the values directly:
 
 <MultiLanguage>
 
