@@ -89,7 +89,7 @@ Groups require additional code in your app to set up, while cohorts are created 
 
 ## How to create a cohort
 
-Once you've captured identified events, there are three ways to create a new cohort:
+Once you've captured identified events, there are four ways to create a new cohort:
 
 ### Method 1: Create a new cohort directly from an insight
 
@@ -136,6 +136,20 @@ Example prompts:
 - "List all cohorts in my project"
 
 See the [MCP documentation](/docs/model-context-protocol) for setup instructions and the full list of available tools.
+
+### Method 4: Create a new cohort inline from a filter
+
+You can create cohorts directly from any filter that supports cohort selection, such as insights, feature flags, surveys, or dashboards.
+
+1. Open any filter that supports cohort selection.
+
+2. Click **+ Create new cohort** in the cohort dropdown.
+
+3. Enter a name and define your cohort criteria in the modal.
+
+4. Click **Save**. The new cohort is automatically selected in your filter.
+
+> **Note:** This method creates dynamic cohorts only. To create a static cohort, use the full cohort editor at [People > Cohorts](https://us.posthog.com/cohorts).
 
 ## Static and dynamic cohorts
 
