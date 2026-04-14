@@ -46,11 +46,17 @@ This is the address that recipients will see in their inbox.
 
 To maximize deliverability and avoid spam folders, you must verify your domain.
 
-1. After adding your email address, PostHog shows DNS records for **SPF** and **DKIM**.
+1. After adding your email address, PostHog shows DNS records for **SPF**, **DKIM**, and **MAIL FROM**.
 2. Copy these into your domain host (e.g. Cloudflare, GoDaddy).
 3. Verification may take a few minutes to propagate.
 
 Once verified, you'll see a green check mark in your settings.
+
+<CalloutBox icon="IconInfo" title="DMARC is recommended but optional" type="fyi">
+
+PostHog also shows a **DMARC** record in your email settings. Adding DMARC can improve deliverability by helping receiving mail servers trust your domain, but it's not required for verification. Your email connector will work without it.
+
+</CalloutBox>
 
 <ProductScreenshot
     imageLight="https://res.cloudinary.com/dmukukwp6/image/upload/w_1000,c_limit,q_auto,f_auto/verified_email_light_c2f3b925c5.png"
@@ -117,7 +123,7 @@ Once your channel is created, you can use it in a workflow to deliver messages t
 | Issue | Solution |
 | --- | --- |
 | Emails not sending? | Check that your domain is verified and you've added the DNS records correctly. |
-| Spam folder issues? | Ensure SPF/DKIM are valid, and consider setting up DMARC. |
+| Spam folder issues? | Ensure SPF/DKIM are valid. Consider adding DMARC for better deliverability (optional). |
 | Variables not populating? | Confirm the property exists on the person profile (e.g. `person.name`). |
 
 </Step>
