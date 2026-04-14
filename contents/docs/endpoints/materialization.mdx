@@ -42,14 +42,8 @@ Materialization is not available when:
 
 - **The endpoint has incompatible variables** - Only certain [variable](/docs/endpoints/variables) types are supported. See the compatibility table below.
 - **The endpoint is inactive** - Only active endpoints and their versions are materialized.
-<<<<<<< HEAD
-- **The insight uses cohort breakdowns** - Cohort breakdowns produce complex queries that cannot be properly reconstructed from materialized data.
-- **The insight uses compare mode** - Compare mode doubles the series count in a way that cannot be reliably materialized.
-||||||| 01833508b
-=======
 - **The query uses cohort breakdowns** - Queries with cohort breakdowns cannot be materialized because they produce complex union queries that prevent accurate result reconstruction.
 - **The query uses compare mode** - Queries with compare mode enabled cannot be materialized because compare mode alters the series count in ways that prevent accurate result reconstruction.
->>>>>>> master
 
 ### Variable compatibility
 
