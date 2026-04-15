@@ -6448,6 +6448,12 @@ export const docsMenu = {
                     color: 'green',
                 },
                 {
+                    name: 'PII scrubbing',
+                    url: '/docs/logs/pii-scrubbing',
+                    icon: 'IconShield',
+                    color: 'purple',
+                },
+                {
                     name: 'PostHog AI',
                 },
                 {

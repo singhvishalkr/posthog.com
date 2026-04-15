@@ -1,0 +1,106 @@
+---
+title: PII scrubbing
+sidebar: Docs
+showTitle: true
+---
+
+import { CalloutBox } from 'components/Docs/CalloutBox'
+
+PostHog can automatically detect and redact common personally identifiable information (PII) from your logs at ingest time. This adds a layer of protection against sensitive data in your logs, even when your application accidentally logs something it shouldn't.
+
+## How it works
+
+When PII scrubbing is enabled, PostHog scans your log payloads during ingestion and replaces detected patterns with `[REDACTED]`. This happens server-side before logs are stored, so original values never reach the database.
+
+The scrubbing applies to:
+
+- **Log body** (both JSON and plain text)
+- **Log attributes**
+- **Resource attributes**
+- **Service name, instrumentation scope, and event name**
+
+<CalloutBox icon="IconWarning" title="Lossy redaction" type="warning">
+
+PII scrubbing is irreversible. Once a value is replaced with `[REDACTED]`, there's no way to recover the original. This is intentional — it ensures sensitive data can't be retrieved even with database access.
+
+</CalloutBox>
+
+## What gets redacted
+
+PostHog detects and redacts the following patterns:
+
+### Value patterns
+
+These patterns are detected anywhere in string values:
+
+| Pattern | Example | Result |
+|---------|---------|--------|
+| Email addresses | `user@example.com` | `[REDACTED]` |
+| Bearer tokens | `Bearer eyJhbGciOi...` | `Bearer [REDACTED]` |
+| Stripe API keys | `sk_live_abc123...` or `sk_test_abc123...` | `[REDACTED]` |
+| Credit card numbers | `4242424242424242` | `[REDACTED]` |
+
+Credit card detection uses the Luhn algorithm to avoid false positives. Random 16-digit numbers that don't pass Luhn validation won't be redacted.
+
+### Sensitive attribute keys
+
+If an attribute key contains any of these substrings (case-insensitive), the entire value is replaced:
+
+- `password`
+- `secret`
+- `token`
+- `authorization`
+- `cookie`
+- `credential`
+- `apikey` or `api_key`
+- `access_token`
+- `refresh_token`
+- `bearer`
+- `email`
+
+For example, an attribute `auth_token: "abc123"` becomes `auth_token: "[REDACTED]"`.
+
+## Enabling PII scrubbing
+
+1. Go to **Settings** in your PostHog project
+2. Navigate to the **Logs** section
+3. Find the **PII scrubbing** setting
+4. Toggle **Scrub PII in logs at ingestion** to on
+
+Changes take effect immediately for new logs. Existing logs are not affected.
+
+<CalloutBox icon="IconLock" title="Permission required" type="fyi">
+
+Changing this setting requires Project Admin or Editor access.
+
+</CalloutBox>
+
+## Interaction with JSON parsing
+
+If you have both **JSON parsing** and **PII scrubbing** enabled, PostHog processes them in order:
+
+1. JSON parsing extracts structured attributes from JSON log bodies
+2. PII scrubbing redacts sensitive values from both the body and the extracted attributes
+
+This means extracted attributes are also protected by PII scrubbing.
+
+## Limitations
+
+PII scrubbing is a best-effort safety net, not a replacement for proper log hygiene in your application code:
+
+- **Pattern-based detection**: The feature relies on regex patterns. Obfuscated or non-standard formats may not be detected.
+- **No custom patterns**: You can't add your own patterns. The built-in patterns cover common cases.
+- **JSON structure preserved**: When scrubbing JSON bodies, the structure is preserved with only the sensitive string values replaced.
+
+For sensitive data that doesn't match these patterns, follow the [logging best practices](/docs/logs/best-practices) to avoid logging it in the first place.
+
+## Best practices
+
+Use PII scrubbing as a safety net alongside good logging hygiene:
+
+1. **Don't rely on it exclusively**: Design your application to avoid logging sensitive data in the first place
+2. **Review what you log**: Audit your logging statements periodically
+3. **Test your logs**: Check that sensitive data isn't appearing in test environments before production
+4. **Use structured logging**: Structured logs make it easier to control what gets logged at each field level
+
+See the [logging best practices guide](/docs/logs/best-practices) for more on what to log and what to avoid.
