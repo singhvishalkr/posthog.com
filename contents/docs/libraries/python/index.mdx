@@ -155,7 +155,51 @@ It's also possible to [run experiments without using feature flags](/docs/experi
 
 ## LLM analytics
 
-Our Python SDK includes a built-in LLM analytics feature. It enables you to capture LLM usage, performance, and more. Check out our [analytics docs](/docs/llm-analytics) for more details on setting it up.
+Our Python SDK includes a built-in LLM analytics feature. It enables you to capture LLM usage, performance, and more. Check out our [LLM Analytics docs](/docs/llm-analytics) for more details on setting it up.
+
+### OpenTelemetry integration
+
+If you already use OpenTelemetry to instrument your AI/LLM applications, you can route AI spans directly to PostHog using the `posthog.ai.otel` module. This works with OpenTelemetry-based instrumentation like [OpenLLMetry](https://www.traceloop.com/docs/openllmetry/introduction), [Vercel AI SDK](https://sdk.vercel.ai/docs), or other OTel-compatible libraries – no custom glue code required.
+
+First, install the SDK with the `otel` extra:
+
+```bash
+pip install 'posthog[otel]'
+```
+
+Then configure your OpenTelemetry `TracerProvider` to use the `PostHogSpanProcessor`:
+
+```python
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.resources import Resource, SERVICE_NAME
+from posthog.ai.otel import PostHogSpanProcessor
+
+resource = Resource(
+    attributes={
+        SERVICE_NAME: "my-app",
+        "posthog.distinct_id": "user-123",
+    }
+)
+provider = TracerProvider(resource=resource)
+provider.add_span_processor(
+    PostHogSpanProcessor(api_key="<ph_project_token>")
+)
+trace.set_tracer_provider(provider)
+```
+
+The `PostHogSpanProcessor` automatically filters and forwards AI-related spans (those with `gen_ai.*`, `llm.*`, `ai.*`, or `traceloop.*` prefixes) to PostHog's OTLP endpoint.
+
+For setups that only accept an exporter (for example, when passing to `SimpleSpanProcessor`), use `PostHogTraceExporter` instead:
+
+```python
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+from posthog.ai.otel import PostHogTraceExporter
+
+provider.add_span_processor(
+    SimpleSpanProcessor(PostHogTraceExporter(api_key="<ph_project_token>"))
+)
+```
 
 ## Error tracking
 
