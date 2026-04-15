@@ -50,6 +50,25 @@ The logs search accepts multiple tokens and quoted phrases to help you find the 
 - **Multiple negative tokens:** List multiple `!tokens` (e.g., `!debug !trace`) to exclude logs that contain any of those tokens
 - **Punctuation:** Quotes and escapes are handled using shell-like parsing rules, so complex tokens should be quoted if they contain spaces or special characters
 
+## View in context
+
+When you find a specific log, you often need to see what happened around it. The **View in context** dropdown lets you pivot to related logs without manually building filters.
+
+Access this dropdown from:
+- The log detail drawer header (click any log to open)
+- The row hover actions on any log entry
+
+### Context options
+
+| Option | What it shows | When it appears |
+|--------|--------------|-----------------|
+| **View surrounding logs** | Logs from the same service within ±1 minute | When `service.name` is present |
+| **View all logs at this time** | All logs across services within ±1 minute | Always available |
+| **View trace logs** | All logs sharing the same trace ID | When `trace_id` is present |
+| **View session logs** | All logs from the same session within ±30 minutes | When `session_id` is present |
+
+Selecting an option opens a modal with filters pre-applied so you can see surrounding context immediately.
+
 ## Get more from search with structured logs
 
 Search works best when your logs are consistent and structured. Adding key-value context like `user_id`, `endpoint`, and `status_code` to every log line makes filtering faster and more precise. See our [logging best practices guide](/docs/logs/best-practices) for patterns that make logs easier to search and query.
