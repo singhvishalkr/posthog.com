@@ -230,6 +230,8 @@ The `source` field helps you understand the prompt's origin:
 - `'stale_cache'` – Returned from an expired cache entry because the API request failed
 - `'code_fallback'` – Used the fallback value because both API and cache failed
 
+> **Note:** In the JavaScript SDK, calling `get()` without `withMetadata` is deprecated. The SDK logs a warning once per instance. The plain-string return will be removed in the next major version—migrate to `withMetadata: true` to access prompt metadata and avoid breaking changes.
+
 ## Caching
 
 Prompts are cached on the SDK side to minimize latency and API calls:
