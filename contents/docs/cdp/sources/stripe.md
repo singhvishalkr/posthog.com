@@ -49,15 +49,9 @@ If you prefer not to use OAuth, you can connect using a restricted API key inste
 | Connect       | Click **Read** in the **Connect** header                                                                           |
 | Webhooks      | **Write** on Webhook endpoints (so PostHog can create the real-time sync webhook for you – see [Setting up webhooks](#setting-up-webhooks-for-real-time-syncing)) |
 
-<<<<<<< HEAD
-If you aren't concerned with giving more permissions than necessary, you can also click **Read** on the **Core**, **Billing**, and **Connect** headers to give the necessary permissions.
-||||||| 36b9ad7cf
-If you aren't concerned with giving us more permissions than necessary, you can also simply click **Read** on the **Core**, **Billing**, and **Connect** headers to give us the necessary permissions.
-=======
-If you aren't concerned with giving us more permissions than necessary, you can also simply click **Read** on the **Core**, **Billing**, and **Connect** headers, plus **Write** on **Webhook endpoints**, to give us the necessary permissions.
+If you aren't concerned with giving more permissions than necessary, you can also click **Read** on the **Core**, **Billing**, and **Connect** headers, plus **Write** on **Webhook endpoints**, to give the necessary permissions.
 
 The **Webhook endpoints** write permission is only required if you want PostHog to set up real-time syncing automatically. If you skip it, everything else still works – you'll just need to [create the webhook manually](#creating-the-webhook-manually-in-stripe) later if you decide to enable real-time syncing.
->>>>>>> master
 
 If your Stripe account is in a language other than English, we suggest you update it to English before following the steps above to guarantee the correct permissions are set.
 
