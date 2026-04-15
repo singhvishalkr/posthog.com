@@ -140,30 +140,46 @@ prompts = Prompts(
     host='https://us.posthog.com'
 )
 
-# Fetch the latest version of a prompt
-template = prompts.get(
+# Fetch the latest version of a prompt with metadata
+result = prompts.get(
     'support-system-prompt',
+    with_metadata=True,
     cache_ttl_seconds=600,  # Override default 5-minute cache
     fallback='You are a helpful assistant.'  # Used if fetch fails
 )
 
+# result is a PromptResult dataclass containing: prompt, name, version, and source
+# source indicates where the prompt came from: 'api', 'cache', 'stale_cache', or 'code_fallback'
+
 # Or fetch a specific version
-template = prompts.get(
+result = prompts.get(
     'support-system-prompt',
+    with_metadata=True,
     version=2,
     fallback='You are a helpful assistant.'
 )
 
 # Compile with variables
-system_prompt = prompts.compile(template, {
+system_prompt = prompts.compile(result.prompt, {
     'company': 'Acme Corp',
     'tier': 'premium',
     'user_name': 'Alice'
 })
 
-# Use in your LLM call
+# Use in your LLM call with prompt metadata for tracing
 # ... your OpenAI/Anthropic call here
 ```
+
+The `with_metadata` option returns a `PromptResult` dataclass with:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `prompt` | `str` | The prompt content |
+| `name` | `str` | The prompt name |
+| `version` | `int` | The prompt version number |
+| `source` | `str` | Where the prompt was loaded from: `'api'`, `'cache'`, `'stale_cache'`, or `'code_fallback'` |
+
+> **Note:** In the Python SDK, calling `get()` without `with_metadata` is deprecated. The SDK logs a `DeprecationWarning` once per instance. The plain-string return will be removed in the next major version—migrate to `with_metadata=True` to access prompt metadata and avoid breaking changes.
 
 ### JavaScript/TypeScript
 
@@ -245,7 +261,28 @@ Prompts are cached on the SDK side to minimize latency and API calls:
 
 To track which prompts and versions are used in which generations, include the `$ai_prompt_name` and `$ai_prompt_version` properties when capturing.
 
-When using the JavaScript SDK with `withMetadata: true`, you can pass the metadata directly from the prompt result:
+When using `with_metadata=True` (Python) or `withMetadata: true` (JavaScript), you can pass the metadata directly from the prompt result:
+
+<MultiLanguage>
+
+```python
+result = prompts.get(
+    'support-system-prompt',
+    with_metadata=True,
+    fallback='You are a helpful assistant.'
+)
+
+system_prompt = prompts.compile(result.prompt, {'company': 'Acme Corp'})
+
+response = client.chat.completions.create(
+    model="gpt-5",
+    messages=[{"role": "system", "content": system_prompt}],
+    posthog_properties={
+        "$ai_prompt_name": result.name,
+        "$ai_prompt_version": result.version
+    }
+)
+```
 
 ```typescript
 const result = await prompts.get('support-system-prompt', {
@@ -261,32 +298,6 @@ const response = await openai.chat.completions.create({
     posthogProperties: {
         $ai_prompt_name: result.name,
         $ai_prompt_version: result.version
-    }
-})
-```
-
-For Python or when not using `withMetadata`, pass the values directly:
-
-<MultiLanguage>
-
-```python
-response = client.chat.completions.create(
-    model="gpt-5",
-    messages=[{"role": "system", "content": system_prompt}],
-    posthog_properties={
-        "$ai_prompt_name": "support-system-prompt",
-        "$ai_prompt_version": 2
-    }
-)
-```
-
-```typescript
-const response = await openai.chat.completions.create({
-    model: "gpt-5",
-    messages: [{ role: "system", content: systemPrompt }],
-    posthogProperties: {
-        $ai_prompt_name: "support-system-prompt",
-        $ai_prompt_version: 2
     }
 })
 ```
