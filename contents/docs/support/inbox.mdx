@@ -32,8 +32,27 @@ Each ticket has the following properties:
 | `new` | Just created, not yet viewed by team |
 | `open` | Being actively worked on |
 | `pending` | Waiting for customer response |
-| `on_hold` | Paused for external reason |
+| `on_hold` | Paused – can be set manually or via [snooze](#snoozing-tickets) |
 | `resolved` | Issue resolved, conversation closed |
+
+## Snoozing tickets
+
+Snooze a ticket to temporarily put it on hold. It reopens automatically after a set duration – useful when you're waiting for a customer to try something, or for a related issue to be resolved.
+
+### How to snooze a ticket
+
+1. Open a ticket
+2. Click the **Snooze** button in the ticket header
+3. Select a duration (e.g., 1 hour, 4 hours, 1 day, 1 week)
+4. The ticket status changes to `on_hold`
+
+When the snooze period expires, the ticket reopens with status `open`.
+
+### When to use snooze
+
+- **Waiting for customer action** – You've asked them to try something and want to follow up later
+- **Dependent on external work** – A fix is in progress and you want to check back after deployment
+- **Scheduled follow-up** – The customer asked you to reach out at a specific time
 
 ## Filtering and search
 
