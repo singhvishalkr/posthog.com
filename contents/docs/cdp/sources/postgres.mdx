@@ -36,7 +36,7 @@ Your Postgres database needs to be configured for CDC. The wizard shows a **What
 
 - **`wal_level=logical`** - On AWS RDS, set the `rds.logical_replication` parameter to `1` in your parameter group
 - **Sufficient replication slots** - Make sure `max_replication_slots` and `max_wal_senders` have available capacity
-- **User with replication privileges** - The database user needs the `REPLICATION` role
+- **User with replication privileges** - The database user needs the `REPLICATION` role. On AWS RDS, membership in `rds_replication` or `rds_superuser` also works
 - **Primary keys on tables** - Tables you want to sync must have primary keys
 - **SSL/TLS enabled** - Required for new sources (see note below)
 
@@ -47,16 +47,14 @@ Click **Check database prerequisites** to verify your database meets these requi
 When setting up CDC, choose between:
 
 - **PostHog-managed** - PostHog creates and manages the replication slot and publication
-- **Self-managed** - You create the replication slot and publication yourself using SQL that PostHog generates for you
+- **Self-managed** - You create the publication yourself using SQL that PostHog generates for you, and PostHog creates the replication slot
 
-With self-managed CDC, after selecting your tables, PostHog shows the SQL commands to run on your database:
+With self-managed CDC, after selecting your tables, a modal shows the SQL commands to run on your database:
 
-- Creating the replication slot
-- Creating the publication
 - Granting necessary permissions
-- Adding tables to the publication
+- Creating the publication for your selected tables
 
-Run these commands on your database, then click **Verify & create source** to confirm the setup works.
+Run these commands, then click **Verify & create** to confirm the publication exists. PostHog then creates the replication slot and sets up syncing.
 
 <CalloutBox icon="IconWarning" title="SSL/TLS required for new sources" type="caution">
 
