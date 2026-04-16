@@ -44,8 +44,6 @@ export const TrendsCombineEventsDark = "https://res.cloudinary.com/dmukukwp6/vid
 
 export const FilterIcon = () => <svg class="inline-block w-5 h-5 text-gray" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none"><path d="M10 18H14V16H10V18ZM3 6V8H21V6H3ZM6 13H18V11H6V13Z" fill="currentColor"></path></svg>
 
-export const CopyIcon = () => <svg class="inline-block w-5 h-5 text-gray" fill="none" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m15.4545 3h-9.81814c-.9 0-1.63636.73636-1.63636 1.63636v11.45454h1.63636v-11.45454h9.81814zm2.4546 3.27273h-9.00001c-.9 0-1.63636.73636-1.63636 1.63636v11.45451c0 .9.73636 1.6364 1.63636 1.6364h9.00001c.9 0 1.6364-.7364 1.6364-1.6364v-11.45451c0-.9-.7364-1.63636-1.6364-1.63636zm0 13.09087h-9.00001v-11.45451h9.00001z" fill="currentColor"></path></svg>
-
 <iframe
     src="https://www.youtube-nocookie.com/embed/2jQco8hEvTI?start=493"
     className="rounded shadow-xl"
@@ -161,7 +159,7 @@ This will bring up a dropdown where you can search through all event properties 
 
 In the above example, we've chosen the `Device type` event property, so that we can plot data for `Desktop` users only.
 
-If we wanted to include events from `Mobile` users as well, we can create an additional series by clicking the <CopyIcon /> icon to duplicate the existing series, then change the `Device type` field to `Mobile`.
+To include events from `Mobile` users as well, duplicate the existing series by clicking the **...** (three-dot menu) on a series and selecting **Duplicate**. Then change the `Device type` field to `Mobile`.
 
 This generates a line chart with `Pageview` events for `Desktop` and `Mobile` users plotted together for the last 7 days.
 
