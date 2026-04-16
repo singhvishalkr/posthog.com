@@ -43,27 +43,13 @@ Draft workflows can also be archived, even if they contain invalid configuration
 
 Every workflow starts with a trigger. Triggers define what kicks off the workflow.
 
-<<<<<<< HEAD
-| Trigger type     | Description                                                              |
-| ---------------- | ------------------------------------------------------------------------ |
-| Event trigger    | Runs when a captured [PostHog event](/docs/data/events) occurs (e.g. `signed up`) |
-| Webhook trigger  | Programmatically start a workflow via an HTTP request                    |
-| Schedule trigger | Runs on a recurring schedule (e.g. every Monday at 9am)                  |
-||||||| 4eab0716d
-| Trigger type     | Description                                                          |
-| ---------------- | -------------------------------------------------------------------- |
-| Event trigger    | A captured [PostHog event](/docs/data/events) (e.g. `signed up`)     |
-| Webhook trigger  | Programmatically start a workflow with a webhook                     |
-| Schedule trigger | Run a workflow on a recurring schedule (e.g. daily, weekly, monthly) |
-=======
 | Trigger type             | Description                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------- |
-| Event trigger            | A captured [PostHog event](/docs/data/events) (e.g. `signed up`)                   |
-| Webhook trigger          | Programmatically start a workflow with an HTTP request                             |
-| Schedule trigger         | Run a workflow on a recurring schedule (e.g. daily, weekly, monthly)               |
+| Event trigger            | Runs when a captured [PostHog event](/docs/data/events) occurs (e.g. `signed up`)  |
+| Webhook trigger          | Programmatically start a workflow via an HTTP request                              |
+| Schedule trigger         | Runs on a recurring schedule (e.g. every Monday at 9am)                            |
 | Batch trigger            | Run the workflow for each person matching an audience, on a recurring schedule     |
 | Tracking pixel trigger   | Start the workflow when a 1x1 tracking pixel is loaded (e.g. in an email)          |
->>>>>>> master
 
 ### Event triggers
 
