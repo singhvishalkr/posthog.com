@@ -31,6 +31,7 @@ showStepsToc: true
         enabled: true, // (optional) Enable sourcemaps generation and upload, default to true on production builds
         releaseName: "my-application", // (optional) Release name, defaults to repository name
         releaseVersion: "1.0.0", // (optional) Release version, defaults to current git commit
+        build: process.env.CI_BUILD_NUMBER, // (optional) Build identifier (CI build ID, CFBundleVersion, versionCode)
         deleteAfterUpload: true, // (optional) Delete sourcemaps after upload, defaults to true
     },
   });

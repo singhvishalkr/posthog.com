@@ -8,9 +8,28 @@ import CLIAuthenticate from '../_snippets/cli/authenticate.mdx'
 
 ## Nuxt v3.7 and above
 
-For Nuxt v3.7 and above, the `@posthog/nuxt` module automatically handles source map generation and upload during the build process. 
+For Nuxt v3.7 and above, the `@posthog/nuxt` module automatically handles source map generation and upload during the build process.
 
-No manual configuration is needed - follow the [Nuxt error tracking installation guide](/docs/error-tracking/installation/nuxt) to set up the module, and source maps are automatically generated and uploaded when you build your project.
+Follow the [Nuxt error tracking installation guide](/docs/error-tracking/installation/nuxt) to set up the module, and source maps are automatically generated and uploaded when you build your project.
+
+### Optional configuration
+
+You can customize sourcemap upload behavior by adding a `sourcemaps` object to your PostHog module configuration in `nuxt.config.js`:
+
+```js file=nuxt.config.js
+export default defineNuxtConfig({
+  modules: ['@posthog/nuxt'],
+  posthog: {
+    publicKey: process.env.NUXT_PUBLIC_POSTHOG_KEY,
+    host: process.env.NUXT_PUBLIC_POSTHOG_HOST,
+    sourcemaps: {
+      releaseName: 'my-application', // (optional) Release name
+      releaseVersion: '1.0.0', // (optional) Release version
+      build: process.env.CI_BUILD_NUMBER, // (optional) Build identifier (CI build ID, CFBundleVersion, versionCode)
+    },
+  },
+})
+```
 
 ## Nuxt v3.6 and below
 
