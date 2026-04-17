@@ -133,6 +133,9 @@ posthog = Posthog(
 )
 prompts = Prompts(posthog)
 
+# With error tracking enabled
+prompts = Prompts(posthog, capture_errors=True)
+
 # Or initialize directly
 prompts = Prompts(
     personal_api_key='<your_personal_api_key>',
@@ -217,6 +220,37 @@ Prompts are cached on the SDK side to minimize latency and API calls:
 - **Configurable per-request**: Override with `cache_ttl_seconds` (Python) or `cacheTtlSeconds` (JS)
 - **Stale-while-revalidate**: If a fetch fails, the cached value is used (even if expired)
 - **Fallback support**: Provide a fallback value that's used when both fetch and cache fail
+
+## Error tracking (Python)
+
+When prompt fetches fail, you can report them automatically to PostHog Error Tracking. This surfaces API issues like 404s (typos in prompt names), 403s (permission problems), auth errors, and network timeouts in your Error Tracking dashboard instead of logging them.
+
+To enable error tracking, pass `capture_errors=True` when initializing `Prompts`:
+
+```python
+from posthog import Posthog
+from posthog.ai.prompts import Prompts
+
+posthog = Posthog(
+    '<your_project_api_key>',
+    host='https://us.posthog.com',
+    personal_api_key='<your_personal_api_key>'
+)
+
+# Enable error tracking for prompt fetch failures
+prompts = Prompts(posthog, capture_errors=True)
+
+# Fetch failures now appear in PostHog Error Tracking
+template = prompts.get('my-prompt', fallback='default prompt')
+```
+
+When `capture_errors=True`:
+
+- Failed fetches are reported via `capture_exception()` before falling back to cache or the fallback value
+- Each captured error includes metadata – prompt name, version, and PostHog host
+- The SDK handles errors gracefully – if error reporting itself fails, it doesn't affect your fallback logic
+
+Error tracking requires a PostHog client. If you initialize `Prompts` directly without a client, enabling `capture_errors` has no effect.
 
 ## Linking prompts to traces
 
