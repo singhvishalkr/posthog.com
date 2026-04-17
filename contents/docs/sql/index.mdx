@@ -66,6 +66,60 @@ ORDER BY url_count DESC
 
 You can use SQL insights within [notebooks](/docs/notebooks) and with external sources using the [data warehouse](/docs/data-warehouse).
 
+## Filling gaps in time series data
+
+Time series data often has gaps where no events occurred. The `WITH FILL` clause fills these gaps automatically, making it easier to query logs, traces, metrics, and other time-based data.
+
+Add `WITH FILL` to an `ORDER BY` expression to specify the range and step for gap-filling:
+
+```sql
+SELECT
+    toStartOfHour(timestamp) AS hour,
+    count() AS event_count
+FROM events
+WHERE timestamp > now() - interval 7 day
+GROUP BY hour
+ORDER BY hour WITH FILL FROM toStartOfHour(now() - interval 7 day) TO toStartOfHour(now()) STEP interval 1 hour
+```
+
+### WITH FILL syntax
+
+The full syntax for `WITH FILL` is:
+
+```sql
+ORDER BY column WITH FILL FROM start TO end STEP increment
+```
+
+- **FROM** - The starting value for filling (optional)
+- **TO** - The ending value for filling (optional)
+- **STEP** - The increment between filled values (optional)
+
+If you omit these parameters, defaults are used based on the column's data type.
+
+### INTERPOLATE for non-sorted columns
+
+Use `INTERPOLATE` at the end of the `ORDER BY` clause to specify how non-sorted columns are filled:
+
+```sql
+SELECT
+    toStartOfHour(timestamp) AS hour,
+    count() AS event_count,
+    uniq(distinct_id) AS unique_users
+FROM events
+WHERE timestamp > now() - interval 7 day
+GROUP BY hour
+ORDER BY hour WITH FILL
+    FROM toStartOfHour(now() - interval 7 day)
+    TO toStartOfHour(now())
+    STEP interval 1 hour
+INTERPOLATE (event_count AS 0, unique_users AS 0)
+```
+
+Without `INTERPOLATE`, non-sorted columns return default values (typically 0 or empty) for filled rows. With `INTERPOLATE`, you can:
+
+- Set a specific value: `INTERPOLATE (column AS 0)`
+- Repeat the previous row's value: `INTERPOLATE (column)`
+
 ## Query API
 
 To query events using SQL via the [PostHog API](/docs/api/queries), get [your project ID](https://us.posthog.com/settings/project-details#variables), a [personal API key](https://us.posthog.com/settings/user-api-keys) with the project query read permission and make a POST request to `/api/projects/:project_id/query` endpoint with the following JSON payload:
