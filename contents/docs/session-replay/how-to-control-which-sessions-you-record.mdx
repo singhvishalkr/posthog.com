@@ -112,6 +112,8 @@ You can select a [feature flag](/docs/feature-flags) to control whether to recor
 
 Sampling enables you to record a percentage of all sessions. To set a sampling rate, go to the [replay ingestion settings page](https://us.posthog.com/replay/settings#selectedSetting=replay-triggers).
 
+The sampling rate is shared across all platforms. When you configure it on the **Web** tab, the same rate applies to both web and mobile session recordings. Mobile SDK users can view the current rate on the Mobile tab but must use the Web tab to change it.
+
 Sampling is supported on the following SDKs:
 
 - **Web** - posthog-js 1.85.0+
