@@ -346,7 +346,7 @@ The `system.logs_alerts` table contains log alert configurations that monitor lo
 | `created_at`             | When the alert was created                                |
 | `updated_at`             | When the alert was last updated                           |
 
-State values include `not_firing`, `firing`, `pending_resolve`, `errored`, `snoozed`, and `broken`. The `broken` state indicates the alert was auto-disabled after too many consecutive evaluation failures. You can reset a broken alert via the API to clear the failure counter and schedule an immediate recheck.
+State values include `not_firing`, `firing`, `pending_resolve`, `errored`, `snoozed`, and `broken`. The `broken` state indicates the alert was auto-disabled after too many consecutive evaluation failures. You can reset a broken alert directly from the alert modal or the list view dropdown menu in PostHog. Resetting clears the failure counter and schedules an immediate recheck.
 
 ### `system.logs_views`
 
