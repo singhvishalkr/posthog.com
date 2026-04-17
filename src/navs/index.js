@@ -1370,6 +1370,10 @@ export const handbookSidebar = [
                                 name: 'Expansion, cross-sell & retention',
                                 url: '/handbook/growth/sales/expansion-and-retention',
                             },
+                            {
+                                name: 'TAM Excellence',
+                                url: '/handbook/growth/sales/tam-excellence',
+                            },
                         ],
                     },
                 ],
