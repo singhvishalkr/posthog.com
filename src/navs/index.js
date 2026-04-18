@@ -5623,6 +5623,11 @@ export const docsMenu = {
                             icon: 'IconClaudeCode',
                         },
                         {
+                            name: 'OpenTelemetry',
+                            url: '/docs/llm-analytics/installation/opentelemetry',
+                            platformLogo: 'opentelemetry',
+                        },
+                        {
                             name: 'Manual capture',
                             url: '/docs/llm-analytics/installation/manual-capture',
                             icon: 'IconCode',
