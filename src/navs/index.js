@@ -1371,6 +1371,10 @@ export const handbookSidebar = [
                                 url: '/handbook/growth/sales/expansion-and-retention',
                             },
                             {
+                                name: 'Expansion strategies',
+                                url: '/handbook/growth/sales/expansion-strategies',
+                            },
+                            {
                                 name: 'TAM Excellence',
                                 url: '/handbook/growth/sales/tam-excellence',
                             },
